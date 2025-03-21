@@ -1,3 +1,3 @@
 ## Event Management System
 
-### Developed with Node.js and TypeScript.
+Developed with Node.js and TypeScript.
