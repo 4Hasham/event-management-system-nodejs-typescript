@@ -1,8 +1,5 @@
-import dotenv from 'dotenv';
-dotenv.config({
-    path: `.env.${process.env.NODE_ENV}`
-});
+import './config'
 
 export default {
-    PORT: process.env.APP_PORT
+    PORT: parseInt(process.env.APP_PORT)
 };

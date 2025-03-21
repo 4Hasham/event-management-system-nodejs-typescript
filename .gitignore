@@ -3,3 +3,4 @@ dist/
 .vscode/
 .env.development
 .env.production
+.env

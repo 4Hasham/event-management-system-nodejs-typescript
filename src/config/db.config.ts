@@ -1,7 +1,4 @@
-import dotenv from 'dotenv';
-dotenv.config({
-    path: `.env.${process.env.NODE_ENV}`
-});
+import './config'
 
 export default {
     DATABASE: process.env.DATABASE
