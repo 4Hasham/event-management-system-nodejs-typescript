@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { APIResponse, CODES } from "../utils/response";
 import { getError } from "../utils/common";
-import { createEventSchema, getAllEventsSchema, updateEventByIdSchema } from "../dtos/events.dtos";
+import { createEventSchema, getAllEventsSchema, updateEventByIdSchema } from "../dtos/events.dto";
 import EventService from '../services/events.service';
 import { isValidObjectId } from "mongoose";
 
@@ -36,7 +36,7 @@ export default class EventController {
             const id: string = req.params.id;
             if (!isValidObjectId(id))
                 throw new Error("No valid event ID specified.");
-            const event = EventService.getEventById(id);
+            const event = await EventService.getEventById(id);
             let response: APIResponse = {
                 success: true,
                 message: "Fetched event!",

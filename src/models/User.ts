@@ -1,6 +1,7 @@
 import { Schema } from 'mongoose';
 import database from '../databases/database';
 import { isStrongPassword, isEmail } from 'validator';
+import bcrypt from 'bcrypt';
 
 const User = new Schema({
     first_name: {
@@ -18,7 +19,7 @@ const User = new Schema({
         unique: true,
         validate: [isEmail, "E-mail address is not valid"],
       },
-      password: {
+    password: {
         type: String,
         required: [true, "Password is required"],
         validate: [
@@ -38,6 +39,12 @@ const User = new Schema({
         type: Boolean,
         default: false
     }
+});
+
+User.pre("save", function (next) {
+    let salt = bcrypt.genSaltSync(10);
+    this.password = bcrypt.hashSync(this.password, salt);
+    next();
 });
 
 export default database.model('users', User);

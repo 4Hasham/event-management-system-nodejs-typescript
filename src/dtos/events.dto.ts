@@ -24,6 +24,7 @@ export const createEventSchema = Joi.object({
         "string.hex": "Must provide valid event organizer ID.",
         "string.length": "Must provide valid organizer ID."
     }),
+    participants: Joi.array().optional(),
     event_date: Joi.date().required().messages({
         "any.required": "Must provide event date."
     })
@@ -34,5 +35,6 @@ export const updateEventByIdSchema = Joi.object({
     description: Joi.string().optional(),
     location: Joi.string().optional(),
     organizer: Joi.string().hex().length(24).optional(),
+    participants: Joi.array().optional(),
     event_date: Joi.date().optional()
 });
