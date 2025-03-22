@@ -18,9 +18,17 @@ const Event = new Schema({
         type: String,
         required: [true, "Please specify the location of your event."]
     },
+    participants: {
+        type: [Schema.Types.ObjectId],
+        default: []
+    },
     organizer: {
         type: Schema.Types.ObjectId,
         required: [true, "Must provide organizer's ID."]
+    },
+    approved: {
+        type: Boolean,
+        default: false
     }
 });
 

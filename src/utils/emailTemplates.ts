@@ -12,11 +12,11 @@ export default {
         `
     }),
 
-    Event: (email, event) => ({
+    Event: (event: any) => ({
         subject: `Event System - Approve to Join`,
-        text: `Dear ${email.split('@')[0]},\n\nYou have been added to ${event.name}. \n\nFor any assistance, feel free to reach out to us at support.\n\nBest Regards,\nThe Event System Team`,
+        text: `Dear participants,\n\nYou have been added to ${event.name}. \n\nFor any assistance, feel free to reach out to us at support.\n\nBest Regards,\nThe Event System Team`,
         html: `
-        <p>Dear ${email.split('@')[0]},</p>
+        <p>Dear participants,</p>
         <h3>You have been added to ${event.name} at ${new Date(event.event_date).toLocaleString()}</h3><br />
         <p><strong>Best Regards,</strong><br>Event System Team</p>
         `
