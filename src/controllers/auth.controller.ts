@@ -6,6 +6,28 @@ import { APIResponse, CODES } from "../utils/response";
 import { generateToken, getError } from "../utils/common";
 
 export default class AuthController {
+    static async isUserAuthenticated(req: any, res: Response): Promise<void> {
+        try {
+            if (req.auth) {
+                let response: APIResponse = {
+                    success: true,
+                    message: "User is logged in!",
+                    record: req.auth
+                }
+                res.status(CODES.OK).json(response);
+            }
+            throw new Error('No user logged in.');
+        } catch (error) {
+            console.error(new Date(), error);
+            let response: APIResponse = {
+                success: false,
+                message: getError(error) || "We could not get auth status.",
+                record: {}
+            }
+            res.status(CODES.UNAUTHORIZED).json(response);
+        }
+    }
+
     static async loginUser(req: Request, res: Response): Promise<void> {
         try {
             const payload: Object = req.body;

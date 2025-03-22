@@ -21,26 +21,28 @@ const token = (req: Request) => {
     }
 }
 
-const optionalAuth = (req: any, _: Response, next: NextFunction) => {
-    const _token = req.cookies.jwt_access_token;
-    if(!_token)
-        console.log("Not authenticated");
-    try {
-        req.auth = jwt.verify(_token, config.ACCESS_TOKEN_SECRET);
-    } catch(e) {
-        console.log(e, "Error occurred while authenticating, continuing..");
-    }
-    next();
-}
+// const optionalAuth = (req: any, _: Response, next: NextFunction) => {
+//     const _token = req.cookies.jwt_access_token;
+//     if(!_token)
+//         console.log("Not authenticated");
+//     try {
+//         req.auth = jwt.verify(_token, config.ACCESS_TOKEN_SECRET);
+//     } catch(e) {
+//         console.log(e, "Error occurred while authenticating, continuing..");
+//     }
+//     next();
+// }
 
-const auth = async (req: any, res: Response, next: NextFunction) => {
+const auth = async (req: any, res: Response, next: NextFunction): Promise<void> => {
     const _token = req.cookies.jwt_access_token;
-    if(!_token)
-        return res.status(CODES.UNAUTHORIZED).json({
+    if(!_token) {
+        res.status(CODES.UNAUTHORIZED).json({
             success: false,
             message: "Access denied.",
             record: null
         });
+        return;
+    }
     try {
         req.auth = jwt.verify(_token, config.ACCESS_TOKEN_SECRET);
         const expirationTimestamp = req.auth.exp * 1000;
@@ -55,10 +57,10 @@ const auth = async (req: any, res: Response, next: NextFunction) => {
                  res.cookie('jwt_access_token', newToken, options);
             }
         }
-        return next();
+        next();
     }
     catch(err) {
-        return res.status(CODES.UNAUTHORIZED).json({
+        res.status(CODES.UNAUTHORIZED).json({
             success: false,
             message: "Access denied.",
             record: null
@@ -66,19 +68,18 @@ const auth = async (req: any, res: Response, next: NextFunction) => {
     }
 }
 
-const verify = async(req: any, res: Response, next: NextFunction) => {
+const verify = async(req: any, res: Response, next: NextFunction): Promise<void> => {
     if (req.auth.is_admin) {
         next();
     }
-    return res.status(CODES.FORBIDDEN).json({
+    res.status(CODES.FORBIDDEN).json({
         success: false,
         message: "You are not authorized to perform this action.",
         record: null
     });
 }
 
-module.exports = {
+export default {
     auth,
-    verify,
-    optionalAuth
+    verify
 };

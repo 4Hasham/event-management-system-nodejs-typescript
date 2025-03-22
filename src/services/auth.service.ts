@@ -164,7 +164,7 @@ export default class AuthService {
         console.error(new Date(), error);
         return {
           success: false,
-          message: "",
+          message: "Could not send activation OTP.",
           record: null
         };
       }
