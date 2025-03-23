@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { APIResponse, CODES } from "../utils/response";
 import { getError } from "../utils/common";
-import { createEventSchema, getAllEventsSchema, joinEventSchema, updateEventByIdSchema } from "../dtos/events.dto";
+import { createEventSchema, getAllEventsSchema, updateEventByIdSchema } from "../dtos/events.dto";
 import EventService from '../services/events.service';
 import { isValidObjectId } from "mongoose";
 
