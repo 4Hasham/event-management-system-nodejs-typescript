@@ -1,7 +1,5 @@
-import { CookieOptions, Request, Response } from "express";
-import { emailSchema, loginUserSchema } from "../dtos/auth.dto";
+import { Response } from "express";
 import AdminService from '../services/admin.service';
-import config from '../config/env.config';
 import { APIResponse, CODES } from "../utils/response";
 import { getError } from "../utils/common";
 import { isValidObjectId } from "mongoose";
